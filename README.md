@@ -1,5 +1,5 @@
 # ChordGrid
-Designe and written by Victor Paredes
+Designed and written by Victor Paredes
 
 A modular JavaScript library for visualizing guitar and stringed instrument fretboards with customizable themes, tunings, and chord displays.
 
