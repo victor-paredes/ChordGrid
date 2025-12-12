@@ -215,6 +215,161 @@ Fretboard.init({
 });
 ```
 
+## Dynamic Updates
+
+You can update fretboard settings dynamically after initialization using the `updateSettingsGroupA`, `updateSettingsGroupB`, and `updateSettingsGroupC` methods. This is useful for creating interactive interfaces with buttons or other controls.
+
+### Updating Settings Group A (Fretboard Variables)
+
+```html
+<button onclick="updateTuning()">Switch to Drop D Tuning</button>
+
+<script>
+function updateTuning() {
+    window.Fretboard.updateSettingsGroupA({
+        tuning: { 1: 'D', 2: 'A', 3: 'D', 4: 'G', 5: 'B', 6: 'E' },
+        numStrings: 6,
+        stringType: '1'
+    }, 'fretboard-1');
+}
+</script>
+```
+
+### Updating Settings Group B (Fretboard Skin)
+
+```html
+<button onclick="updateTheme()">Apply Ebony Theme</button>
+
+<script>
+function updateTheme() {
+    window.Fretboard.updateSettingsGroupB({
+        fretMarkers: { 3: 'single', 12: 'double' },
+        fretboardBindingDisplay: true,
+        cssVariables: {
+            '--string-1-default-color': 'linear-gradient(90deg, rgba(20, 20, 20, 1) 0%, rgba(60, 60, 60, 1) 50%, rgba(20, 20, 20, 1) 100%)'
+        }
+    }, 'fretboard-1');
+}
+</script>
+```
+
+### Updating Settings Group C (Chord Variables)
+
+```html
+<button onclick="displayChord()">Show C Major Chord</button>
+
+<script>
+function displayChord() {
+    window.Fretboard.updateSettingsGroupC({
+        name: 'C Major',
+        root: 'C',
+        fingering: [
+            { string: 1, fret: 0, finger: 0 },
+            { string: 2, fret: 1, finger: 1 },
+            { string: 3, fret: 0, finger: 0 },
+            { string: 4, fret: 2, finger: 2 },
+            { string: 5, fret: 3, finger: 3 },
+            { string: 6, fret: 0, finger: 0 }
+        ],
+        startFret: 1,
+        numFrets: 12
+    }, false, 'fretboard-1');
+}
+</script>
+```
+
+### Complete Example with Multiple Buttons
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dynamic Fretboard Updates</title>
+    <link rel="stylesheet" href="css/fretboard.css">
+</head>
+<body>
+    <div id="fretboard-container">
+        <div id="fretboard_1" data-fretboard="full" data-fretboard-id="fretboard-1"></div>
+    </div>
+
+    <div style="margin: 20px;">
+        <h3>Fretboard Controls</h3>
+
+        <button onclick="switchToStandardTuning()">Standard Tuning</button>
+        <button onclick="switchToDropD()">Drop D Tuning</button>
+        <button onclick="showCMajor()">C Major Chord</button>
+        <button onclick="showGMajor()">G Major Chord</button>
+    </div>
+
+    <script src="js/fretboard.js"></script>
+    <script>
+        // Initialize fretboard
+        Fretboard.init({
+            containerId: 'fretboard_1',
+            settingsGroupA: {
+                numStrings: 6,
+                tuning: { 1: 'E', 2: 'A', 3: 'D', 4: 'G', 5: 'B', 6: 'E' }
+            }
+        });
+
+        // Update functions
+        function switchToStandardTuning() {
+            window.Fretboard.updateSettingsGroupA({
+                tuning: { 1: 'E', 2: 'A', 3: 'D', 4: 'G', 5: 'B', 6: 'E' },
+                numStrings: 6,
+                stringType: '1'
+            }, 'fretboard-1');
+        }
+
+        function switchToDropD() {
+            window.Fretboard.updateSettingsGroupA({
+                tuning: { 1: 'D', 2: 'A', 3: 'D', 4: 'G', 5: 'B', 6: 'E' },
+                numStrings: 6,
+                stringType: '1'
+            }, 'fretboard-1');
+        }
+
+        function showCMajor() {
+            window.Fretboard.updateSettingsGroupC({
+                name: 'C Major',
+                root: 'C',
+                fingering: [
+                    { string: 1, fret: 0, finger: 0 },
+                    { string: 2, fret: 1, finger: 1 },
+                    { string: 3, fret: 0, finger: 0 },
+                    { string: 4, fret: 2, finger: 2 },
+                    { string: 5, fret: 3, finger: 3 },
+                    { string: 6, fret: 0, finger: 0 }
+                ],
+                startFret: 1,
+                numFrets: 12
+            }, false, 'fretboard-1');
+        }
+
+        function showGMajor() {
+            window.Fretboard.updateSettingsGroupC({
+                name: 'G Major',
+                root: 'G',
+                fingering: [
+                    { string: 1, fret: 3, finger: 3 },
+                    { string: 2, fret: 0, finger: 0 },
+                    { string: 3, fret: 0, finger: 0 },
+                    { string: 4, fret: 0, finger: 0 },
+                    { string: 5, fret: 2, finger: 2 },
+                    { string: 6, fret: 3, finger: 3 }
+                ],
+                startFret: 1,
+                numFrets: 12
+            }, false, 'fretboard-1');
+        }
+    </script>
+</body>
+</html>
+```
+
+**Note:** The second parameter in `updateSettingsGroupC` (set to `false` in the examples) controls whether to clear existing fingering before applying the new one. Set to `true` to clear, `false` to merge.
+
 ## Settings Groups
 
 ### Settings Group A - Fretboard Variables
